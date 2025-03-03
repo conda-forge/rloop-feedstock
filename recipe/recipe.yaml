@@ -51,8 +51,9 @@ tests:
         - coverage
         - pytest >=7.4.2,<7.5.0
         - pytest-asyncio >=0.21.1,<0.22.0
+        - pytest-timeout
     script:
-      - coverage run --source=rloop --branch -m pytest -vv --tb=long --color=yes
+      - coverage run --source=rloop --branch -m pytest -vv --tb=long --color=yes --timeout=120
       - coverage report --show-missing --skip-covered --fail-under=38
 
 about:
