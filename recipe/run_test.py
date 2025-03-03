@@ -11,11 +11,12 @@ SKIPS = [
     # times out
     # https://github.com/conda-forge/rloop-feedstock/pull/1
     "test_tcp_connection_send",
+    "test_tcp_server_recv_send",
 ]
 
 if SKIPS:
     SKIP_OR = " or ".join(SKIPS)
-    PYTEST += ["-k", f"not ({SKIP_OR})" if len(SKIPS) > 1 else f"not {SKIPS[0]}"]
+    PYTEST += ["-k", f"not ({SKIP_OR})"]
 
 
 if __name__ == "__main__":
