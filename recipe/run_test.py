@@ -1,0 +1,27 @@
+import sys
+from subprocess import call
+
+FAIL_UNDER = "38"
+COV = ["coverage"]
+RUN = ["run", "--source=rloop", "--branch", "-m"]
+PYTEST = ["pytest", "-vv", "--color=yes", "--tb=long", "--timeout=60"]
+REPORT = ["report", "--show-missing", "--skip-covered", f"--fail-under={FAIL_UNDER}"]
+
+SKIPS = [
+    # times out
+    # https://github.com/conda-forge/rloop-feedstock/pull/1
+    "test_tcp_connection_send",
+]
+
+if SKIPS:
+    SKIP_OR = " or ".join(SKIPS)
+    PYTEST += ["-k", f"not ({SKIP_OR})" if len(SKIPS) > 1 else f"not {SKIPS[0]}"]
+
+
+if __name__ == "__main__":
+    sys.exit(
+        # run the tests
+        call([*COV, *RUN, *PYTEST])
+        # maybe run coverage
+        or call([*COV, *REPORT])
+    )

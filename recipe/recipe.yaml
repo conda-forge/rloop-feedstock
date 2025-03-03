@@ -43,6 +43,8 @@ tests:
       imports: rloop
       pip_check: true
   - files:
+      recipe:
+        - run_test.py
       source:
         - pyproject.toml
         - tests/
@@ -53,8 +55,7 @@ tests:
         - pytest-asyncio >=0.21.1,<0.22.0
         - pytest-timeout
     script:
-      - coverage run --source=rloop --branch -m pytest -vv --tb=long --color=yes --timeout=120
-      - coverage report --show-missing --skip-covered --fail-under=38
+      - python run_test.py
 
 about:
   summary: An asyncio event loop implemented in Rust
