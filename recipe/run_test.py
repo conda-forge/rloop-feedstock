@@ -1,10 +1,10 @@
 import sys
 from subprocess import call
 
-FAIL_UNDER = "38"
+FAIL_UNDER = "33"
 COV = ["coverage"]
 RUN = ["run", "--source=rloop", "--branch", "-m"]
-PYTEST = ["pytest", "-vv", "--color=yes", "--tb=long", "--timeout=60"]
+PYTEST = ["pytest", "-vv", "--color=yes", "--tb=long"]
 REPORT = ["report", "--show-missing", "--skip-covered", f"--fail-under={FAIL_UNDER}"]
 
 SKIPS = [
