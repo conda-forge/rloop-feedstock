@@ -42,19 +42,23 @@ tests:
   - python:
       imports: rloop
       pip_check: true
-  - files:
-      recipe:
-        - run_test.py
-      source:
-        - pyproject.toml
-        - tests/
-    requirements:
-      run:
-        - coverage
-        - pytest >=7.4.2,<7.5.0
-        - pytest-asyncio >=0.21.1,<0.22.0
-    script:
-      - python run_test.py
+  - # hangs on pytest
+    # https://github.com/conda-forge/rloop-feedstock/pull/5
+    if: not (target_platform == "linux-aarch64" and match(python, "3.10.*"))
+    then:
+      files:
+        recipe:
+          - run_test.py
+        source:
+          - pyproject.toml
+          - tests/
+      requirements:
+        run:
+          - coverage
+          - pytest >=7.4.2,<7.5.0
+          - pytest-asyncio >=0.21.1,<0.22.0
+      script:
+        - python run_test.py
 
 about:
   summary: An asyncio event loop implemented in Rust
