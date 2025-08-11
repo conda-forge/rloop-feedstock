@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.1.4"
+  version: "0.1.5"
   maturin_min: 1.1.0
   maturin_max: 2.0.0
 
@@ -12,7 +12,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/r/rloop/rloop-${{ version }}.tar.gz
-  sha256: 4dbaf6d0bafe8ebc554a6460c840d9a69075b33e849ca42aeb86117e3b42fb51
+  sha256: 895976484a67e5f05c0a6ec5d6f6779b51d66972174f59d2b7e0b0ab68e961e9
 
 build:
   number: 0
@@ -42,9 +42,9 @@ tests:
   - python:
       imports: rloop
       pip_check: true
-  - # hangs on pytest
+    # hangs on pytest
     # https://github.com/conda-forge/rloop-feedstock/pull/5
-    if: not (target_platform == "linux-aarch64" and match(python, "3.10.*"))
+  - if: not (linux and target_platform != "linux-64")
     then:
       files:
         recipe:
