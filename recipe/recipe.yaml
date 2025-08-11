@@ -44,7 +44,7 @@ tests:
       pip_check: true
     # hangs on pytest
     # https://github.com/conda-forge/rloop-feedstock/pull/5
-  - if: not (target_platform == "linux-aarch64" and match(python, "3.10.*"))
+  - if: not (linux and target_platform != "linux-64")
     then:
       files:
         recipe:
