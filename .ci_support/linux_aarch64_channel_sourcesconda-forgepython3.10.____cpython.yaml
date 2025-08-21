@@ -19,4 +19,7 @@ python:
 rust_compiler:
 - rust
 target_platform:
-- linux-64
+- linux-aarch64
+zip_keys:
+- - python
+  - channel_sources
