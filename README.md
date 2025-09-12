@@ -332,6 +332,3 @@ Feedstock Maintainers
 
 * [@bollwyvl](https://github.com/bollwyvl/)
 
-
-<!-- dummy commit to enable rerendering -->
-

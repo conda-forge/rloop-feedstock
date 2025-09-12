@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.1.6"
+  version: "0.2.0"
   maturin_min: 1.1.0
   maturin_max: 2.0.0
 
@@ -12,7 +12,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/r/rloop/rloop-${{ version }}.tar.gz
-  sha256: f521ddaee1725e982ee31cccfec382a411b279f03084f7988593a34dd70a6c9f
+  sha256: a295c6dd57ff0e2bdeaf3ba7ce47fcbefd40668657cdd4ed64055dc72da3a140
 
 build:
   number: 1
