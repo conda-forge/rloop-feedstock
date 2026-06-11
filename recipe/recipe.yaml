@@ -3,8 +3,6 @@ schema_version: 1
 
 context:
   version: "0.2.0"
-  maturin_min: 1.1.0
-  maturin_max: 2.0.0
 
 package:
   name: rloop
@@ -15,24 +13,28 @@ source:
   sha256: a295c6dd57ff0e2bdeaf3ba7ce47fcbefd40668657cdd4ed64055dc72da3a140
 
 build:
-  number: 2
+  number: 3
   skip: win
   script:
-    file: build-rloop
+    env:
+      CARGO_PROFILE_RELEASE_STRIP: symbols
+      CARGO_PROFILE_RELEASE_LTO: fat
+      CARGO: cargo-auditable-wrapper${{ ".bat" if win }}
+    content:
+      - cp "${RECIPE_DIR}/cargo-auditable-wrapper.sh" "${BUILD_PREFIX}/bin/cargo-auditable-wrapper"
+      - chmod 755 "${BUILD_PREFIX}/bin/cargo-auditable-wrapper"
+      - |-
+        ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
+      - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
 requirements:
   build:
     - ${{ compiler("rust") }}
     - ${{ stdlib("c") }}
     - cargo-bundle-licenses
-    - if: build_platform != target_platform
-      then:
-        - python
-        - cross-python_${{ target_platform }}
-        - crossenv
-        - maturin >=${{ maturin_min }},<${{ maturin_max }}
+    - cargo-auditable
   host:
-    - maturin >=${{ maturin_min }},<${{ maturin_max }}
+    - maturin >=1.1.0,<2.0.0
     - pip
     - python
   run:
@@ -44,21 +46,17 @@ tests:
       pip_check: true
     # hangs on pytest
     # https://github.com/conda-forge/rloop-feedstock/pull/5
-  - if: not (linux and target_platform != "linux-64")
-    then:
-      files:
-        recipe:
-          - run_test.py
-        source:
-          - pyproject.toml
-          - tests/
-      requirements:
-        run:
-          - coverage
-          - pytest >=7.4.2,<7.5.0
-          - pytest-asyncio >=0.21.1,<0.22.0
-      script:
-        - python run_test.py
+  - files:
+      source:
+        - pyproject.toml
+        - tests/
+    requirements:
+      run:
+        - coverage
+        - pytest >=7.4.2,<7.5.0
+        - pytest-asyncio >=0.21.1,<0.22.0
+    script:
+      file: run_test.py
 
 about:
   summary: An asyncio event loop implemented in Rust
