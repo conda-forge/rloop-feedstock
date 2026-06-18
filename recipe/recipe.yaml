@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.2.1"
+  version: "0.3.0"
 
 package:
   name: rloop
@@ -10,10 +10,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/r/rloop/rloop-${{ version }}.tar.gz
-  sha256: 56da2f8433b3298e173a7f0c02e988c89554f8a24492fee2be34ba9cb8736271
+  sha256: 8df2315d5210400b3dc744e4f1bab9e17457a419d85f6ca3e0d1cc27b8ab0049
 
 build:
-  number: 3
+  number: 0
   skip: win
   script:
     env:
@@ -34,7 +34,7 @@ requirements:
     - cargo-bundle-licenses
     - cargo-auditable
   host:
-    - maturin >=1.1.0,<2.0.0
+    - maturin >=1.8.0,<2.0.0
     - pip
     - python
   run:
